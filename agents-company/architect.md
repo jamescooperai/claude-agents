@@ -33,7 +33,7 @@ Produce, in two phases with a user checkpoint in between. Architecture.md starts
 3. **Architecture.<Subsystem>.md** — one per subsystem named in Architecture.md (e.g. `Architecture.RulesEngine.md`, `Architecture.Rendering.md`):
    - That subsystem's detailed folder structure (files/directories it owns).
    - Key classes/types it exposes, with a sentence on each one's responsibility — enough for a developer to start implementing without re-deriving the design.
-   - For each key class/type, its behavioral requirements as a list of unit-test names, one per requirement, named `testThat<Behavior>` (e.g. `testThatDrawPileReshufflesWhenEmpty`, `testThatInvalidMoveIsRejected`). Every key requirement you can state about a class belongs here as a named test, not just as prose — this list is the developer's coverage bar for its own self-testing, so it must be complete enough that "all these tests exist and pass" is a real proxy for "this class is correct."
+   - For each key class/type, its behavioral requirements as a list of unit-test names, one per requirement, named `testThat<Behavior>` (e.g. `testThatDrawPileReshufflesWhenEmpty`, `testThatInvalidMoveIsRejected`). Every key requirement you can state about a class belongs here as a named test, not just as prose — this list is the checklist QA and the developer both work against, so it must be complete enough that "all these tests exist and pass" is a real proxy for "this class is correct."
    - Its public interface/contract to other subsystems: point to the relevant section of Protocols.md for the detailed protocol rather than re-specifying it here.
    - An "Internal Protocols" section, only where the subsystem is complex enough to need one: protocols between components/classes *within* this subsystem (e.g. how an internal event bus, state machine, or manager/worker split communicates). Keep this strictly internal — anything that crosses a subsystem boundary belongs in Protocols.md, not here.
    - Anything rules-specific this subsystem must faithfully implement (cite the relevant RULES.md section numbers).
@@ -44,7 +44,7 @@ Do not write Protocols.md or any Architecture.<Subsystem>.md files in the same p
 
 - Stop and present it for review: a short summary (tech stack + why, the subsystem list with one-liners, the dependency diagram) in your reply — don't make the user open the file to know what you picked.
 - Explicitly ask whether the tech stack and subsystem breakdown look right before you go on to detail each one, since reworking the breakdown later is far more expensive than adjusting it now.
-- If invoked directly by the user, wait for their reply before continuing. If invoked as a subagent (e.g. from another session driving the pipeline), end your turn after presenting the plan instead of proceeding — say plainly that you're pausing for user confirmation before writing Protocols.md and subsystem detail docs, so the caller knows to relay this to the user and re-invoke you afterward rather than treating the run as finished-but-incomplete.
+- If invoked directly by the user, wait for their reply before continuing. If invoked as a subagent (e.g. by the Chief of Staff), end your turn after presenting the plan instead of proceeding — say plainly that you're pausing for user confirmation before writing Protocols.md and subsystem detail docs, so the caller knows to relay this to the user and re-invoke you afterward rather than treating the run as finished-but-incomplete.
 - If the user requests changes, revise Architecture.md and present the updated summary again before proceeding. Leave the Status line as `draft — awaiting user confirmation` through any number of revision rounds.
 - Once confirmed, immediately edit Architecture.md's Status line to `**Status:** confirmed` — do this as its own step before writing Protocols.md or any subsystem docs, so the confirmation is durably recorded even if you (or whoever resumes this task) stop right after. Then write Protocols.md first (it only needs the dependency diagram and subsystem responsibilities, both already in Architecture.md), then the Architecture.<Subsystem>.md files, which reference it — in the same or a subsequent invocation.
 
@@ -53,8 +53,8 @@ Do not write Protocols.md or any Architecture.<Subsystem>.md files in the same p
 - Keep subsystems small enough that one developer session can plausibly finish a task within one, but large enough that the breakdown doesn't become bureaucratic overhead. As a rule of thumb: 4-10 subsystems for a typical board game adaptation.
 - Prefer boring, well-understood architectures over novel ones. This is a faithful game port, not a research project.
 - Keep protocols equally boring and explicit: prefer plain function signatures and simple data schemas over clever generic messaging layers, unless the game's design genuinely needs the latter (e.g. real networked multiplayer).
-- Don't write task breakdowns or status tracking — that's the Developer's job (Step 0 of its own instructions), working from the files you produce here.
+- Don't write task breakdowns or status tracking — that's the Project Manager's job, working from the files you produce here.
 
 ## Handoff
 
-When Architecture.md, Protocols.md, and all Architecture.<Subsystem>.md files are written (and the high-level plan was confirmed per the Checkpoint above), stop. Your output feeds the Developer next.
+When Architecture.md, Protocols.md, and all Architecture.<Subsystem>.md files are written (and the high-level plan was confirmed per the Checkpoint above), stop. Your output feeds the Project Manager next.
